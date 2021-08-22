@@ -1,0 +1,29 @@
+.first-half {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.second-half {
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+
+.first-quater {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.last-three {
+  grid-column-start: 2;
+  grid-column-end: 5;
+}
+
+.wide {
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+.last-quater {
+  grid-column-start: 4;
+  grid-column-end: 5;
+}

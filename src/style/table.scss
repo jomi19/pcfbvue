@@ -1,0 +1,54 @@
+@import "@/style/variables.scss";
+.table {
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+table,
+th,
+td {
+  border-bottom: 1px solid $grey;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: center;
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+}
+
+.green {
+  color: #00c857 !important;
+}
+
+.red {
+  color: #ff0d00 !important;
+}
+.row {
+  width: 100%;
+  justify-content: space-between;
+  line-height: 2.5;
+
+  &:hover {
+    background-color: $grey;
+  }
+}
+
+.row-header {
+  width: 100%;
+
+  justify-content: space-between;
+  line-height: 2.5;
+  font-weight: bold;
+}
+
+.box {
+  border-bottom: 1px solid $grey;
+  width: 100%;
+}

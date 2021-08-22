@@ -1,21 +1,61 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-
+import ProjectList from "@/views/Projectlist.vue"
+import View from "@/views/project/View.vue"
+import Archive from "@/views/project/Archive.vue"
+import NewProject from "@/views/project/New.vue"
+import NewFollowUp from "@/views/followup/New.vue"
+import ViewFollowUp from "@/views/followup/View.vue"
+console.log(NewProject)
 const routes = [
   {
     path: '/',
+    url: "/",
     name: 'Home',
-    component: Home
+    component: ProjectList,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: "/project",
+    url: "/project",
+    name: "Project list",
+    component: ProjectList,
+    navbar: true
+  },
+  {
+    path: "/project/view/:id?",
+    url: "/project/view",
+    name: "Hem",
+    component: View,
+  }, 
+  {
+    path: "/project/new",
+    url: "/project/new",
+    name: "Nytt project",
+    component: NewProject,
+    navbar: true
+  },
+  {
+    path: "/project/archive",
+    url: "/project/archive",
+    name: "Arkiv",
+    component: Archive,
+    navbar: true
+  },
+  {
+    path: "/followup/new/:id",
+    url: "/followup/new/",
+    name: "Nytt projekt",
+    component: NewFollowUp,
+  },
+  {
+    path: "/followup/view/:id",
+    url: "/followup/view/",
+    name: "Efterkontroll",
+    component: ViewFollowUp
   }
+    
+  
 ]
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

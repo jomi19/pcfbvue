@@ -1,30 +1,51 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <Navbar />
+  <div id="breadcrumb">tst/res</div>
+  <div class="outer-main">
+      <div class="inner-main">
+        <router-view/>
+      </div>
   </div>
-  <router-view/>
+  
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  @import "@/style/main.scss";
+</style>
 
-#nav {
-  padding: 30px;
+<script>
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+import Navbar from "@/views/Navbar";
+import API_URL from "@/config.json"
 
-    &.router-link-exact-active {
-      color: #42b983;
+
+export default {
+  name: "App",
+  data() {
+    return {
+      apiUrl: API_URL,
+      lastScrollPossition: 0,
+      showNavbar: true
     }
+  },
+  components: {
+    Navbar
+  },
+  methods: {
+    scroll: function() {
+      const newScrollPossition = window.pageYOffset || document.documentElement.scrollTop
+      const navBar = document.getElementById("navbar");
+
+      if(this.lastScrollPossition < newScrollPossition) {
+        navBar.style.top = "-50px"
+      } else {
+        navBar.style.top = "0px"
+      }
+      this.lastScrollPossition = newScrollPossition;
+    }
+  },
+  mounted() {
+    window.addEventListener("scroll", this.scroll)
   }
 }
-</style>
+</script>

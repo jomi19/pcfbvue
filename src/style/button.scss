@@ -1,0 +1,30 @@
+@import "@/style/variables.scss";
+
+.button {
+  background-color: $navBar; /* Green */
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 10px;
+  box-shadow: -2px 2px 2px rgb(90, 89, 89);
+  margin: 10px;
+  cursor: pointer;
+
+  &.outlined {
+    background-color: white;
+    color: black;
+    border: 2px solid $navBar; /* Green */
+  }
+  &:hover {
+  }
+
+  &:active {
+    position: relative;
+    top: 2px;
+    box-shadow: none;
+  }
+}
