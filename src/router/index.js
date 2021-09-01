@@ -5,7 +5,8 @@ import Archive from "@/views/project/Archive.vue"
 import NewProject from "@/views/project/New.vue"
 import NewFollowUp from "@/views/followup/New.vue"
 import ViewFollowUp from "@/views/followup/View.vue"
-console.log(NewProject)
+import EditFollowUp from "@/views/followup/Edit.vue"
+
 const routes = [
   {
     path: '/',
@@ -43,8 +44,14 @@ const routes = [
   {
     path: "/followup/new/:id",
     url: "/followup/new/",
-    name: "Nytt projekt",
+    name: "Nytt Efterkontroll",
     component: NewFollowUp,
+  },
+  {
+    path: "/followup/edit/:id",
+    url: "/followup/new/",
+    name: "Redigera efterkontroll",
+    component: EditFollowUp,
   },
   {
     path: "/followup/view/:id",

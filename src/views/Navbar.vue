@@ -46,6 +46,7 @@ export default {
     top: 0;
     z-index: 1;
     transition-duration: 125ms;
+    
 }
 
 .navbar::before {
@@ -87,6 +88,7 @@ export default {
     text-align: center;
     width: 25%;
     text-decoration: none;
+    overflow: hidden;
 }
 
 .navbar a:hover {
@@ -100,5 +102,15 @@ export default {
 .navbar.hide {
     top: -40px;
 }
+
+@media only screen and (max-width: 850px) {
+  .navbar {
+    width: 100%;
+    left: 0;
+    margin-left: 0;
+    bottom: 0;
+  }
+}
+
  
 </style>

@@ -1,5 +1,8 @@
 <template>
-    <div class="main-header">Efterkontroll ({{wall?.wallName}})</div>
+    <div class="main-header">
+        Efterkontroll ({{wall?.wallName}})
+        <FileDocumentEditOutline class="right edit blue" v-on:click="navigate()"/>
+    </div>
     <div class="main-content" v-if="wall">
         <div class="first-half halfrow">
             <p><span class="fat">Prokjet: </span>{{wall.projectName}} </p>
@@ -80,18 +83,23 @@
     import axios from "axios";
     import {API_URL} from "@/config.json"
     import myFunctions from "@/components/functions.js"
+    import {FileDocumentEditOutline} from "mdue";
 
     export default {
         name: 'New project',
         components: {
-
+            FileDocumentEditOutline
         },
         methods: {
             submitHandler: function() {
             
                 
             },
-            formatDate: myFunctions.formatDate
+            formatDate: myFunctions.formatDate,
+            navigate: function() {
+                this.$router.push(`/followup/edit/${this.$route.params.id}`) 
+                
+            }
         },
         data() {
             return {
@@ -128,5 +136,15 @@
     }
     .fat {
         font-weight: bold;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .edit {
+        font-size: 1.3em;
+        position: absolute;
+        right: 0.5em;
     }
 </style>

@@ -2,7 +2,7 @@ import { FOLLOWUPLIMIT } from "@/config.json"
 const followUpLimit = FOLLOWUPLIMIT / 100;
 const myFunctions = {
     getProgressColor: (total, done) => {
-        if (total / done >= followUpLimit) return "green";
+        if (done / total >= followUpLimit) return "green";
         return "red";
     },
     formatDate(date) {
@@ -10,6 +10,12 @@ const myFunctions = {
         let dateArray = date.split("T")
         return dateArray[0];
     },
+    getPercent: (total, part) => {
+        console.log(total)
+        console.log(part)
+        if(total === 0) return "-"
+        return (part/total * 100).toFixed(0);
+      },
 
 }
 

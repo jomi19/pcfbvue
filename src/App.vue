@@ -1,6 +1,5 @@
 <template>
   <Navbar />
-  <div id="breadcrumb">tst/res</div>
   <div class="outer-main">
       <div class="inner-main">
         <router-view/>
@@ -11,6 +10,22 @@
 
 <style lang="scss">
   @import "@/style/main.scss";
+  @import "@/style/responsive.scss";
+
+
+@media only screen and (max-width: 850px) {
+  .inner-main {
+    width: 100%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
+  }
+  .main-header {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+}
+
 </style>
 
 <script>

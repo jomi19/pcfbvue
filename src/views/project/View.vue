@@ -1,13 +1,18 @@
 <template>
 
-    <div class="main-header">{{project?.projectName}}({{project?.costumer}})</div>
-    <div class="main-content">
+    <div class="main-header">
+        {{project?.projectName}}({{project?.costumer}})
+
+    </div>
+    <div class="main-content" v-if="project">
         <div class="last-quater">
-            <div v-if="project.deleted">
-                <button >Ta bort</button><button>Återställ</button>
-            </div>
-            <button v-else v-on:click="moveProject ">Arkivera</button>
+
+           
         </div>
+        
+        <button class="button last-quater outlined green" v-if="project.deleted" v-on:click="returnProject" id="archive">Återställ</button> 
+        
+            <button class="button last-quater" v-else v-on:click="moveProject" >Arkivera</button>
         <div class="first-half center-content moldedprogress"  :content="project?.molded" v-tippy> 
             <p>Gjutna väggar</p>
         <RadialProgressBar :diameter="130"
@@ -22,16 +27,15 @@
         </div>
         <div class="second-half center-content followupprogress" :content="project?.followUp" v-tippy>
                     <p>Efterkontroller</p>
-        <RadialProgressBar :diameter="130"
+        <RadialProgressBar :diameter="130" 
                        :completed-steps="project?.followUp"
                        :total-steps="project?.molded"
                        strokeWidth="12"
                        startColor="#4e72dd"
                        id="check"                   >
-            <h2 :class="getProgressColor(project?.molded, project?.followUp)">{{ ((project?.followUp/project?.molded) * 100).toFixed(1) }}%</h2>
+            <h2 :class="getProgressColor(project?.molded, project?.followUp)">{{ getPercent(project?.molded, project.followUp) }}%</h2>
         </RadialProgressBar>
         </div>
-
         <table class="table" v-if="walls">
             <thead>
                 <tr>
@@ -72,8 +76,17 @@
                 </tr> 
             </tbody>
         </table>
-        <button class="button outlined" id="molding" v-on:click="send('mold')" >Gjut</button>
-        <button class="button " id="shipping" v-on:click="send('ship')" ><span>Skicka</span></button>
+        <div class="mold" v-if="Object.keys(this.mold).length > 0">
+            <p>Väggar att Gjuta {{Object.keys(this.mold).length }}</p>
+            <input type="date" class="date" v-model="this.date">
+            <button class="button outlined first-half wide" id="molding" v-on:click="send('mold')" >Gjut</button>
+        </div>
+        
+        <div class="last-quater">
+                    
+        <button class="button " id="shipping" v-on:click="send('ship')" v-if="Object.keys(this.ship).length > 0"><span>Skicka</span></button>
+        </div>
+
     </div>
 
 </template>
@@ -97,6 +110,7 @@ export default {
   },
   data () {
       return {
+          date: new Date().toISOString().substring(0, 10),
           ship: {},
           mold: {},
           project: null,
@@ -111,7 +125,7 @@ export default {
         if(!remove) {
             this[type][id] = true;
         } else {
-
+            
             delete this[type][id]
         }
       },
@@ -124,16 +138,21 @@ export default {
                 send.push(obj)
             }
             axios.put(`${API_URL}wall/${type}`, {
-                walls: send
+                walls: send,
+                date: this.date
             }).then(() => {
               this.getProject();
+              this.date = new Date().toISOString().substring(0, 10)
+              this.ship = {};
+              this.mold = {};
               window.scrollTo(0,0)
             })
         }
       },
       getProgressColor: myFunctions.getProgressColor,
+      getPercent: myFunctions.getPercent,
       getProject: function() {
-        axios
+                  axios
         .get(`${API_URL}project/`, {
             params: {
                 id: this.$route.params.id
@@ -158,8 +177,7 @@ export default {
             }
           this.$router.push(`/followup/new/${id}`)
       },
-      moveProject: function(location) {
-          console.log(location)
+      moveProject: function() {
           axios.delete(`${API_URL}project`, {
                 params: {
                 id: this.$route.params.id
@@ -171,9 +189,20 @@ export default {
           .catch((err) => {
               console.log(err)
           })
+      },
+      returnProject: function() {
+          axios.post(`${API_URL}project/unarchive`, {
+              id: this.$route.params.id
+          }).then((test) => {
+              console.log(test)
+              this.$router.push(`/`)
+          })
+          .catch((err) => {
+              console.log(err)
+          })
       }
   },
-  beforeMount () {
+  mounted () {
       this.getProject();
   }
  
@@ -187,6 +216,10 @@ export default {
     .progress-icon {
         font-size: 1.7em;
         align-self: center;
+    }
+
+    .wide {
+        width: 70%;
     }
 
     .center-content {
@@ -204,6 +237,35 @@ export default {
 
     .pointer {
         cursor: pointer;
+    }
+
+    .small {
+        font-size: 0.5em;
+        position: static;
+    }
+
+    .mold {
+       position: fixed;
+       bottom: 50px;
+       right: 50px;
+       text-align: center;
+       box-shadow: -5px 5px 5px rgb(90, 89, 89);
+       background-color: $mainBackgrond;
+       border-radius: 50px;
+       
+
+       & p {
+           font-size: 1.5em;
+       }
+    }
+
+    @media only screen and (max-width: 1350px)  {
+        .mold {
+            position: relative;
+            box-shadow: none;
+            bottom: 0;
+            right: 0;
+        }
     }
 
     

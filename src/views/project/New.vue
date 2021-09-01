@@ -20,10 +20,10 @@
             <input type="number" name="width" id="width" class="last-three" v-model="wall.width" required>
 
             <label for="height" class="first-quater">Höjd</label>
-            <input type="number" name="height" id="height" class="last-three" v-model="wall.castings" required>
+            <input type="number" name="height" id="height" class="last-three" v-model="wall.height" required>
 
             <label for="height" class="first-quater">Ingjutningsgods</label>
-            <input type="text" name="height" id="height" class="last-three" v-model="wall.height">
+            <input type="text" name="height" id="height" class="last-three" v-model="wall.castings">
 
             <label for="other" class="first-quater">Övrigt</label>
             <textarea name="other" id="other" class="last-three" v-model="wall.other" > </textarea>
@@ -46,7 +46,8 @@
             <th><TrashCanOutline class="red pointer" v-on:click="removeWall(wall.wallName)"/></th>
             
         </tr>
-        <button v-on:click="submitHandler" >Lägg till projekt</button>
+        <button v-on:click="submitHandler" v-if="project.costumer && project.project">Lägg till projekt</button>
+        <span v-else>Kund Namn eller projekt namn</span>
     </table>
 
 
@@ -124,7 +125,7 @@
         cursor: pointer;
     }
     label {
-        padding: 12px 12px 12px 0;
+
         display: inline-block;
         font-weight: bold;
     }

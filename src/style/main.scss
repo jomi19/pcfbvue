@@ -31,6 +31,7 @@ html {
 
 .outer-main {
   background-color: $outerMainBg;
+  margin-top: 3.5em;
 }
 
 .inner-main {
@@ -48,15 +49,21 @@ html {
 .main-header {
   font-family: $fontHeader;
   font-size: 1.5em;
-
+  display: flex;
+  justify-content: center;
   text-align: center;
   align-items: center;
   line-height: 2;
   border-bottom: 2px solid $grey;
+  position: relative;
 }
 
 .form-main {
   width: 100%;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .main-content {

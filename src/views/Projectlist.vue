@@ -26,13 +26,12 @@
               </th>
               <th>
                   Kontroller
-  
               </th>
               
               </tr>
             </thead>
               <tbody>
-                <tr v-for="project in info" :id="project.id" :key="project.id" class="row" v-on:click="test(project.id)">
+                <tr v-for="project in info" :id="project.id" :key="project.id" class="row pointer" v-on:click="test(project.id)">
                   <td>{{project.projectName}}</td>
                   <td>{{project.costumer}}</td>
                   <td>{{formatDate(project.created)}}</td>
@@ -62,13 +61,16 @@ export default {
   name: 'Home',
   data () {
       return {
-          info: null
+          info: null,
+          path: null
       }
   },
   methods: {
       formatDate: myFunctions.formatDate,
       getProgressColor: myFunctions.getProgressColor,
       getPercent: (total, part) => {
+        console.log(total)
+        console.log(part)
         if(total === 0) return "-"
         return (part/total * 100).toFixed(0);
       },
@@ -76,11 +78,10 @@ export default {
         this.$router.push(`/project/view/${id}`)
       }
   },
-  mounted () {
-    
-      axios
-        .get(`${API_URL}project/all`)
-        .then(response => (this.info = response.data.data))
+  mounted() {
+    axios
+      .get(`${API_URL}project/all`)
+      .then(response => (this.info = response.data.data))
   }
  
 }

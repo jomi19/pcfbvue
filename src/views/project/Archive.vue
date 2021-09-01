@@ -1,9 +1,9 @@
 <template>
-<div className="inner-main">
+<div className="inner-main" v-if="info">
         <div className="main-header">
-          Aktiva projekt
+          Arkiverade projekt
         </div>
-        <div className="main-content">
+        <div className="main-content" >
           <div className="row-header"></div>
           <table className="table">
             <thead>
@@ -31,7 +31,7 @@
               
               </tr>
             </thead>
-              <tbody v-if="info">
+              <tbody>
                 <tr v-for="project in info" :id="project.id" :key="project.id" class="row" v-on:click="test(project.id)">
                   <td>{{project.projectName}}</td>
                   <td>{{project.costumer}}</td>
@@ -45,31 +45,30 @@
           </table>
       </div>
       </div>
+      <div v-else>
+                <div className="main-header">
+          Kan inte hitta några aktiva projekt
+        </div>
+      </div>
 </template>
 
 
-
 <script>
-import {API_URL} from "@/config.json";
 import axios from "axios";
-
+import { API_URL} from "@/config.json";
+import myFunctions from "@/components/functions.js"
 
 export default {
-  name: 'View project',
+  name: 'Home',
   data () {
       return {
-          info: null
+          info: null,
+          path: null
       }
   },
   methods: {
-      formatDate: (date) => {
-          let dateArray = date.split("T")
-          return dateArray[0];
-      },
-      getProgressColor: (total, done) => {
-          if (total / done >= 0.1) return "green";
-          return "red";
-      },
+      formatDate: myFunctions.formatDate,
+      getProgressColor: myFunctions.getProgressColor,
       getPercent: (total, part) => {
         if(total === 0) return "-"
         return (part/total * 100).toFixed(0);
@@ -78,11 +77,10 @@ export default {
         this.$router.push(`/project/view/${id}`)
       }
   },
-  beforeMount () {
-      axios
-        .get(`${API_URL}project/archive`)
-        .then(respons => (this.info = respons.data.data))
-
+  mounted() {
+    axios
+      .get(`${API_URL}project/archive`)
+      .then(response => (this.info = response.data.data))
   }
  
 }
@@ -90,51 +88,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/style/variables.scss";
-  .table {
-    width: 100%;
-}
-
-table, th, td {
-    border-bottom: 1px solid $grey;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 15px;
-    text-align: left;
-}
-
-.green {
-  color: green !important;
-}
-
-.red {
-  color: red !important;
-}
-.row {
-  width: 100%;
-  justify-content: space-between;
-  line-height: 2.5;
-
-  &:hover {
-    background-color: $grey;
-  }
-}
-
-.row-header {
-  width: 100%;
-
-  justify-content: space-between;
-  line-height: 2.5;
-  font-weight: bold;
-
-}
-
-.box {
- border-bottom: 1px solid $grey;
- width: 100%;
-
-
-}
+@import "@/style/table.scss"
 
 </style>
